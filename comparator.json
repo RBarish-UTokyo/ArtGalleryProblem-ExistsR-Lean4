@@ -1,0 +1,26 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "ArtGallery.etrinv_erComplete",
+    "ArtGallery.agp_inER",
+    "ArtGallery.agp_inER_guard_variables",
+    "ArtGallery.agp_erComplete",
+    "ArtGallery.agpInt_erComplete",
+    "ArtGallery.etrinv_guard_correspondence",
+    "ArtGallery.etr_guard_correspondence",
+    "ArtGallery.algebraic_guard_coordinate",
+    "ArtGallery.irrational_guards_needed",
+    "ArtGallery.agpPointBoundary_inER_guard_variables",
+    "ArtGallery.agpPointBoundary_erComplete",
+    "ArtGallery.agpBoundaryPoint_inER_guard_variables",
+    "ArtGallery.agpBoundaryPoint_erComplete"
+  ],
+  "definition_names": [],
+  "permitted_axioms": [
+    "propext",
+    "Quot.sound",
+    "Classical.choice"
+  ],
+  "enable_nanoda": true
+}

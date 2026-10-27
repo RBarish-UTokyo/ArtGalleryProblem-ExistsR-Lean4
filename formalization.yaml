@@ -1,0 +1,310 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mathlib-initiative/formalization.yaml/main/schema/formalization.schema.json
+version: "v0.4"
+
+project:
+  name: "The Art Gallery Problem is ∃ℝ-complete: point-point, boundary-point and point-boundary variants, in Lean 4"
+  description: >-
+    A Lean 4 and Mathlib formalization of Abrahamsen, Adamaszek and Miltzow, "The Art Gallery
+    Problem is ∃ℝ-complete" (J. ACM 2021), together with Stade's point-boundary variant
+    (SoCG 2025), for an explicit single-tape Turing machine model. Lean proves that deciding
+    whether a simple polygon with rational corners can be guarded by g guards is ∃ℝ-complete
+    under polynomial-time many-one reductions in each of the three variants known to be
+    ∃ℝ-complete: point guards guarding the whole polygon (Theorem 1, also for integer corners),
+    guards on the boundary guarding the whole polygon (the boundary-point variant of the paper's
+    §7.2), and point guards guarding only the boundary (Stade's theorem); that ETR-INV is
+    ∃ℝ-complete; that the guard sets of the paper's Section 5 polygon correspond exactly to the
+    solutions of an ETR-INV instance (Theorem 54, with the range condition made explicit) and
+    encode the solutions of any ETR formula (Theorem 55); that every real algebraic number is
+    the x-coordinate of a guard in every optimal guard set of some polygon with rational corners
+    (Theorem 2); and that some x-monotone polygon with integer corners can be guarded by three
+    guards but needs four rational guards (Theorem 4). The development provides reusable
+    material on the existential theory of the reals: formulas and their codes, the class ∃ℝ,
+    ETR-INV and ETR-INV-REV with polynomial-time reductions from ETR, and an elementary proof of
+    the doubly exponential solution bound that the paper cites from Schaefer and Štefankovič. It
+    partially answers the open problem of the paper's §7.2 on the number of variables: all three
+    art gallery problems reduce to ETR by formulas whose only variables are the 2g coordinates of the
+    guards (the paper uses (n+g)^6 variables for n corners). Point-point and point-boundary
+    hardness is proved through Stade's construction; the paper's own Section 5 construction is
+    formalized for Theorems 54 and 55, with gadget visibility facts checked as kernel-evaluated
+    certificates, and a modification of it (guard segments on shallow bays in the boundary,
+    re-laid-out addition gadgets) gives boundary-point hardness. The proofs use only
+    the axioms propext, Classical.choice and Quot.sound.
+  authors:
+    - "Robert D. Barish"
+  license: "Apache-2.0"
+  responsible_maintainers:
+    - "Robert D. Barish"
+
+classification:
+  arxiv: [cs.CG, cs.CC]
+  msc2020: [68U05, 68Q17, 14P10, 68V20]
+
+sources:
+  - title: "The Art Gallery Problem is ∃ℝ-complete"
+    authors:
+      - "Mikkel Abrahamsen"
+      - "Anna Adamaszek"
+      - "Tillmann Miltzow"
+    type: paper
+    location: "Journal of the ACM 69(1), Article 4 (2021); preliminary version STOC 2018. The paper is not included in this repository."
+    relationship: formalizes
+    note: >-
+      Formalized: Theorem 1 (also for integer coordinates), Theorem 2, Theorem 4, Theorem 13
+      (membership), Theorem 16 (ETR-INV is ∃ℝ-complete), Theorem 54 (with the range condition
+      stated on both sides, see fidelity.divergences), Theorem 55 and the boundary-point variant
+      of §7.2. Not formalized: Theorem 3 (the Picasso theorem), Theorem 56 and the
+      general-position modification of §7.1. Hardness for Theorem 1 is proved through Stade's
+      construction rather than the paper's Section 5; Section 5 is formalized for Theorems 54
+      and 55 and, modified, for the boundary-point variant. Issues found in the published
+      arguments are listed in docs/paper_issues.md.
+    license: "unknown"
+    author_endorsement: not-contacted
+  - title: "The Point-Boundary Art Gallery Problem is ∃ℝ-hard"
+    authors:
+      - "Jack Stade"
+    type: paper
+    id: "arXiv:2210.12817v3"
+    location: "SoCG 2025, LIPIcs 332, Paper 74; full version arXiv:2210.12817. The paper is not included in this repository."
+    relationship: formalizes
+    note: >-
+      Formalized: ETR-INV-REV is ∃ℝ-hard (Theorem 2.4) and the point-boundary art gallery problem
+      is ∃ℝ-hard (with membership, ∃ℝ-complete). The construction follows the paper's ideas
+      (guard regions formed by wedges, copy nooks, inversion and addition gadgets) with explicit
+      coordinates of our own; the same polygon also proves Theorem 1 of [AAM].
+    license: "unknown"
+    author_endorsement: not-contacted
+  - title: "Parameterized Hardness of Art Gallery Problems"
+    authors:
+      - "Édouard Bonnet"
+      - "Tillmann Miltzow"
+    type: paper
+    id: "arXiv:1603.08116"
+    location: "ESA 2016"
+    relationship: background
+    note: >-
+      Used only in the informal, ETH-conditional Ω(k / log k) lower bound for the number of
+      variables (docs/research/variable_count.md); not formalized.
+    author_endorsement: not-contacted
+  - title: "Fixed Points, Nash Equilibria, and the Existential Theory of the Reals"
+    authors:
+      - "Marcus Schaefer"
+      - "Daniel Štefankovič"
+    type: paper
+    location: "Theory of Computing Systems 60 (2017)"
+    relationship: background
+    note: >-
+      Source of the ball bound used by [AAM] as Corollary 18. It is not assumed: the
+      formalization proves a bound of the same kind from scratch (ArtGallery/ETR/Ball.lean).
+    author_endorsement: not-contacted
+
+related_formalizations:
+  - id: "https://palomar-registry.org/entry?id=PALOMAR-2026-10-02-000013&version=1"
+    relationship: builds-on
+    note: >-
+      Robert D. Barish, "NP-completeness of SAT, 3-SAT and their variants (the Cook–Levin theorem) in Lean 4", Palomar, PALOMAR-2026-10-02-000013 v1
+      (github.com/RBarish-UTokyo/NPCompleteness-Lean4, commit
+      3e603e795b44fedcf7d6dd65b7d1e30547ead925). Its machine model, classes and part of its
+      Complexity library are reused byte-identically; the statement inlines its machine model.
+  - id: "https://palomar-registry.org/entry?id=PALOMAR-2026-10-09-000010&version=1"
+    relationship: builds-on
+    note: >-
+      Robert D. Barish, "MaxSNP-completeness and APX-completeness of MAX-3-SAT and 3-OCCURRENCE MAX-3-SAT (the PCP theorem and hardness of approximation) in Lean 4", Palomar, PALOMAR-2026-10-09-000010 v1
+      (github.com/RBarish-UTokyo/Max3SAT-MaxSNP-APX-Lean4, commit
+      10079b2a14bd0df47d2a24364133f6008b9c207f). Its polynomial-time framework PT/ and the register
+      language of Complexity/Reg are reused byte-identically.
+  - id: "https://palomar-registry.org/entry?id=PALOMAR-2026-10-05-000003&version=2"
+    relationship: adapts
+    note: >-
+      Robert D. Barish, "Linear-Time Triangulation of Simple Polygons (Chazelle's Algorithm) in Lean 4", Palomar, PALOMAR-2026-10-05-000003 v2
+      (github.com/RBarish-UTokyo/LinearTimeTriangulation-ChazelleAlgorithm-Lean4, commit
+      92cc7745aa026aad3e80e7a72fe88cfbd909614a). The polygon definitions of its specification and
+      its planar-geometry, Jordan-curve, triangulation-existence and affine-invariance files are
+      adapted (namespace renamed, provenance note added to each file).
+
+status:
+  scope: >-
+    Proved: the thirteen compared theorems for the definitions of Challenge.lean. On the way:
+    the ETR → ETR-INV and ETR → ETR-INV-REV reductions with their polynomial-time proofs; an
+    elementary doubly exponential solution bound for ETR^{1,+,·} systems; membership of the
+    point-point, boundary-point and point-boundary art gallery problems in ∃ℝ by formulas in the
+    2g guard coordinates; Stade's construction (simplicity, lower bound, guards encode solutions,
+    solutions give guards, polynomial time, integer scaling); the Section 5 construction of
+    [AAM] (simplicity, guard count, pinning, copies, gadget constraints, coverage); its
+    boundary-point modification (bays, re-laid-out addition gadgets, counting for guards on the
+    boundary, coverage, polynomial time); a library of
+    visibility tools for polygons with verified certificate checkers. Not formalized: the
+    Picasso theorem (Theorem 3) and Theorem 56 (their published proof has a gap, and they are not
+    needed for the complexity results), the general-position modification of §7.1, and the
+    ETH-conditional lower bound on the number of variables (informal argument only).
+  sorry_count: 0
+  sorry_in_definitions: 0
+  axioms: [propext, Classical.choice, Quot.sound]
+  main_results:
+    - declaration: ArtGallery.agp_erComplete
+      file: ArtGallery/MainTheorems.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.agpInt_erComplete
+      file: ArtGallery/MainTheorems.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.agpBoundaryPoint_erComplete
+      file: ArtGallery/MainTheorems.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.agpBoundaryPoint_inER_guard_variables
+      file: ArtGallery/FewVars/BoundaryPointMain.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.agpPointBoundary_erComplete
+      file: ArtGallery/MainTheorems.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.etrinv_erComplete
+      file: ArtGallery/PTime/ETRtoINV.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.agp_inER
+      file: ArtGallery/PTime/AGPinER.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.agp_inER_guard_variables
+      file: ArtGallery/FewVars/Main.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.agpPointBoundary_inER_guard_variables
+      file: ArtGallery/FewVars/BoundaryMain.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.etrinv_guard_correspondence
+      file: ArtGallery/Hardness/Correspondence.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.etr_guard_correspondence
+      file: ArtGallery/Corollaries/Theorem55.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.algebraic_guard_coordinate
+      file: ArtGallery/Corollaries/Theorem2.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+    - declaration: ArtGallery.irrational_guards_needed
+      file: ArtGallery/Irrational/Main.lean
+      sorry_count: 0
+      axioms: [propext, Classical.choice, Quot.sound]
+      comparator_config: comparator.json
+
+automation:
+  methods:
+    - method: agent
+      models: ["Claude Opus 5.5 (Anthropic)"]
+      framework: "AI coding agents"
+      tool_setup: >-
+        Claude Opus 5.5 (Anthropic) was used, as agents under the direction of the author, both for the
+        Lean formalization and to assist with the documentation. The author set the task, the
+        target statements and the requirements. Tools: Lean v4.35.0-rc2 and Lake, Mathlib,
+        Python programs with exact rational arithmetic (used during development to compute the
+        construction data and generate the certificate files; not part of this repository), the
+        toolchain's lake comparator and independent kernels.
+      cost:
+        wall_time: "not tracked"
+        spend_usd: "not tracked"
+        hardware: "cloud container"
+      prompting_notes: "n/a"
+  spend_usd: "not tracked"
+  notes: >-
+    The author directed the work. Claude Opus 5.5 (Anthropic) assisted with the Lean definitions,
+    statements, proofs, the development-time certificate generators (not part of this repository;
+    the generated Lean files are checked by the kernel), and the documentation (README.md, this
+    file, the Challenge.lean header, the design notes in docs/ and the verification record). Reused files from the author's earlier entries are listed
+    in docs/PROVENANCE.md.
+
+fidelity:
+  divergences: |-
+    - Machine model, polynomial time and reductions are those of PALOMAR-2026-10-02-000013: deterministic single-tape Turing machines over {blank, 0, 1, separator}, time = number of steps, polynomial bounds c * (n + 1)^k, polynomial-time many-one (Karp) reductions. ∃ℝ is the class of languages that reduce to ETR; invariance under other machine models is not proved.
+    - ETR formulas are quantifier-free formulas with constants 0, 1, operations +, −, · and relations =, <, ≤ under ¬, ∧, ∨, read existentially; variable indices are coded in unary. Art gallery instances are coded with numerators, denominators, integer coordinates and g in binary.
+    - Polygons are lists of corners; simple means at least three distinct corners and any two distinct edges meeting exactly in common endpoints (collinear consecutive corners allowed). The region is the boundary plus the bounded components of its complement; seeing means the closed segment lies in the region. The problems ask for a guard set with exactly g points, which is equivalent to at most g points since guards can be added.
+    - Theorem 54 is stated with the range condition x ∈ [1/2, 2]^n on both sides of the equivalence; read literally, the paper's statement is false for n ≥ 2 (docs/paper_issues.md, A2). The shifts are d_i = 27i/2 − 1/2.
+    - Theorem 55 states: every guard set has at least g guards; if the formula is satisfiable the polygon has a guard set of size g; every guard set of size g contains guards at (c_i x_i + d_i, 0) for some solution x, with rational c_i ≠ 0. It is derived from Theorem 54 through the ETR → ETR-INV reduction.
+    - Hardness of AGP, AGPInt and AGPPointBoundary is proved by a single reduction through Stade's construction (ETR → ETR-INV-REV → polygon), not through [AAM]'s Section 5, whose polygon has no common denominator of polynomial bit length; Theorem 2 is also derived from Stade's construction. Stade's construction and [AAM]'s Section 5 are formalized with explicit coordinates designed for the formalization (e.g. explicit pockets, far witnesses for the middle addition receiver, a single stationary guard per addition gadget, guard count 46n + 16 k_add + 5 k_inv instead of 58n + 20 k_1 + 5 k_2); the design notes in docs/stade/ and docs/section5/ list all deviations.
+    - The boundary-point variant ([AAM] §7.2, stated there as an easy adjustment) is proved with a modified Section 5 construction: every guard segment lies on the floor of a shallow bay in the boundary whose side walls carry pinning spikes, and the addition gadgets are re-laid out (the receivers exchange roles; the mechanism of Lemma 41 is unchanged), because in the paper's layout a receiver of every addition gadget is enclosed by mandatory sight lines and cannot lie on the boundary (docs/paper_issues.md, A6; docs/boundary_point/design.md).
+    - Corollary 18 of [AAM] (a ball bound cited from Schaefer and Štefankovič) is replaced by a self-contained bound for ETR^{1,+,·} systems with a different explicit exponent.
+    - The ETR-INV-REV reduction uses the interval [1, 2] for the second argument of every inversion, proved for the formalization's own ETR → ETR-INV chain.
+
+review:
+  status: agent-reviewed
+  reviewers:
+    - "Claude Opus 5.5 (Anthropic)"
+  notes: >-
+    The Challenge statement was checked against the papers during the AI-assisted development;
+    this check found that Theorem 54 is false when read literally and led to the stated
+    correction. The proof is checked by the Lean kernel, and Comparator verifies that the
+    solution proves the challenge statement using only the permitted axioms (docs/VERIFICATION.md).
+    No human mathematical review or Palomar editorial review is asserted.
+
+alignment:
+  namespace: "ArtGallery"
+  statements:
+    - source: "[AAM] Theorem 1: the art gallery problem is ∃ℝ-complete"
+      lean: "ArtGallery.agp_erComplete"
+      module: "Solution"
+      status: proved
+    - source: "[AAM] Theorem 1, integer coordinates"
+      lean: "ArtGallery.agpInt_erComplete"
+      module: "Solution"
+      status: proved
+    - source: "[AAM] §7.2: the boundary-point variant is ∃ℝ-complete"
+      lean: "ArtGallery.agpBoundaryPoint_erComplete"
+      module: "Solution"
+      status: proved
+      note: "Proved with a modified Section 5 construction (re-laid-out addition gadgets); see fidelity.divergences."
+    - source: "[S] Theorem 1.2: the point-boundary art gallery problem is ∃ℝ-hard (with membership: ∃ℝ-complete)"
+      lean: "ArtGallery.agpPointBoundary_erComplete"
+      module: "Solution"
+      status: proved
+    - source: "[AAM] Theorem 16: ETR-INV is ∃ℝ-complete"
+      lean: "ArtGallery.etrinv_erComplete"
+      module: "Solution"
+      status: proved
+    - source: "[AAM] Theorem 13: the art gallery problem is in ∃ℝ"
+      lean: "ArtGallery.agp_inER"
+      module: "Solution"
+      status: proved
+    - source: "[AAM] §7.2 open problem on the number of variables"
+      lean: "ArtGallery.agp_inER_guard_variables, ArtGallery.agpBoundaryPoint_inER_guard_variables, ArtGallery.agpPointBoundary_inER_guard_variables"
+      module: "Solution"
+      status: proved
+      note: "2g variables (the guard coordinates) suffice for all three variants; a matching ETH-conditional lower bound is argued informally only."
+    - source: "[AAM] Theorem 54"
+      lean: "ArtGallery.etrinv_guard_correspondence"
+      module: "Solution"
+      status: adapted
+      note: "Range condition on both sides of the equivalence (the literal statement is false for n ≥ 2)."
+    - source: "[AAM] Theorem 55"
+      lean: "ArtGallery.etr_guard_correspondence"
+      module: "Solution"
+      status: proved
+    - source: "[AAM] Theorem 2"
+      lean: "ArtGallery.algebraic_guard_coordinate"
+      module: "Solution"
+      status: proved
+    - source: "[AAM] Theorem 4"
+      lean: "ArtGallery.irrational_guards_needed"
+      module: "Solution"
+      status: proved
+
+acknowledgements: >-
+  Mathlib and the Lean community; the Lean FRO for Comparator, lean4export and the toolchain's
+  independent kernels.
